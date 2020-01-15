@@ -19,7 +19,7 @@ class UserDatabaseList(APIView):
 		return Response(serializer.data)
 
 
-	def post(self,request):
+	def post(self,request):#only one entry per post request
 		# print(response)
 		user = request.data.get('simpleform')
 

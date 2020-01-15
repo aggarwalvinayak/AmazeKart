@@ -21,6 +21,6 @@ from simpleform import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('simpleform.urls')),
+    path('api/', include('mainapp.urls')),
 
 ]
