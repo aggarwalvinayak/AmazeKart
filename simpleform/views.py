@@ -11,13 +11,20 @@ from . serializers import UserDatabaseSerializer
 
 class UserDatabaseList(APIView):
 
-    def get(self,request):
+	def get(self,request):
 
-        users_list = UserDatabase.objects.all()
-        serializer = UserDatabaseSerializer(users_list,many = True)
+		users_list = UserDatabase.objects.all()
+		serializer = UserDatabaseSerializer(users_list,many = True)
 
-        return Response(serializer.data)
+		return Response(serializer.data)
 
 
-    def post(self):
-        pass
+	def post(self,request):
+		# print(response)
+		user = request.data.get('simpleform')
+
+		# Create an article from the above data
+		serializer = UserDatabaseSerializer(data=user)
+		if serializer.is_valid(raise_exception=True):
+			user_saved = serializer.save()
+		return Response({"success": "User '{}' created successfully".format(user_saved.name)})
