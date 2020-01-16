@@ -17,10 +17,13 @@ from django.contrib import admin
 from django.urls import path,include
 
 from rest_framework.urlpatterns import format_suffix_patterns
-from simpleform import views
+from . import views
+
+app_name = 'amazekart'  # here for namespacing of urls.
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('mainapp.urls')),
-
+    path("register/", views.register, name="register"),
+    path("logout", views.logout_request, name="logout"),
 ]
