@@ -32,26 +32,27 @@ def register(request):
 									context={"form":form})
 
 def login_request(request):
-		password = request.POST.get('password')
-		username = request.POST.get('username')
-		print()
-		print(username,password)
-		user = authenticate(request, username=username, password=password)
-		contextfrontend={
-		'username':username,
-		'password':password,
-		}
-		if user is not None: 
-				login(request, user)
-				print("User Logged in")
-				return redirect("homepage.html")
 
-		else:
-				print("Invalid User")
+	password = request.POST.get('password')
+	username = request.POST.get('username')
+	print()
+	print(username,password)
+	user = authenticate(username=username, password=password)
+	contextfrontend={
+	'username':username,
+	'password':password,
+	}
+	if user is not None: 
+			login(request, user)
+			print("User Logged in")
+			return redirect("homepage.html")
 
-		return render(request = request,
-									template_name = "amazekart/login/login.html",
-									context=contextfrontend)
+	else:
+			print("Invalid User")
+
+	return render(request = request,
+								template_name = "amazekart/login/login.html",
+								context=contextfrontend)
 
 def logout_request(request):
 	logout(request)
