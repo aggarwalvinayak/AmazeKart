@@ -5,31 +5,32 @@ from django.http import HttpResponse
 
 from django.contrib import messages
 
-from django.contrib.auth.forms import UserCreationForm
+# from django.contrib.auth.forms import UserCreationForm
+from .forms import NewUserForm
 from django.contrib.auth import logout, authenticate, login
 
 def register(request):
-		if request.method == "POST":
-				form = UserCreationForm(request.POST)
-				if form.is_valid():
-						user = form.save()
-						username = form.cleaned_data.get('username')
-						messages.success(request, f"New account created: {username}")
-						login(request, user)
-						return redirect("homepage.html")
+	if request.method == "POST":
+		form = NewUserForm(request.POST)
+		if form.is_valid():
+				user = form.save()
+				username = form.cleaned_data.get('username')
+				messages.success(request, f"New account created: {username}")
+				login(request, user)
+				return redirect("/homepage")
 
-				else:
-						for msg in form.error_messages:
-								messages.error(request, f"{msg}: {form.error_messages[msg]}")
+		else:
+				for msg in form.error_messages:
+						messages.error(request, f"{msg}: {form.error_messages[msg]}")
 
-						return render(request = request,
-													template_name = "amazekart/register.html",
-													context={"form":form})
+				return render(request = request,
+											template_name = "amazekart/register.html",
+											context={"form":form})
 
-		form = UserCreationForm
-		return render(request = request,
-									template_name = "amazekart/register.html",
-									context={"form":form})
+	form = NewUserForm
+	return render(request = request,
+								template_name = "amazekart/register.html",
+								context={"form":form})
 
 def login_request(request):
 
