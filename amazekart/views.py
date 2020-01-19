@@ -9,6 +9,9 @@ from django.contrib import messages
 from .forms import NewUserForm
 from django.contrib.auth import logout, authenticate, login
 
+from django.views.decorators.csrf import csrf_exempt
+
+
 def register(request):
 	if request.method == "POST":
 		form = NewUserForm(request.POST)
@@ -31,29 +34,32 @@ def register(request):
 	return render(request = request,
 								template_name = "amazekart/register.html",
 								context={"form":form})
-
+@csrf_exempt
 def login_request(request):
+	if request.method == "POST":
 
-	password = request.POST.get('password')
-	username = request.POST.get('username')
-	print()
-	print(username,password)
-	user = authenticate(username=username, password=password)
-	contextfrontend={
-	'username':username,
-	'password':password,
-	}
-	if user is not None: 
-			login(request, user)
-			print("User Logged in")
-			return redirect("homepage.html")
+		password = request.POST.get('password')
+		username = request.POST.get('username')
+		print()
+		print(username,password)
+		user = authenticate(username=username, password=password)
+		contextfrontend={
+		'username':username,
+		'password':password,
+		}
+		if user is not None: 
+				login(request, user)
+				print("User Logged in")
+				return redirect("homepage.html")
 
-	else:
-			print("Invalid User")
+		else:
+				print("Invalid User")
 
-	return render(request = request,
+		return render(request = request,
 								template_name = "amazekart/login/login.html",
 								context=contextfrontend)
+	return render(request = request,
+								template_name = "amazekart/login/login.html")
 
 def logout_request(request):
 	logout(request)
