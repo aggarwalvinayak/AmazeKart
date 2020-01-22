@@ -29,8 +29,15 @@ from rest_framework import status
 # 			user_saved = serializer.save()
 # 		return Response({"success": "User '{}' created successfully".format(user_saved.name)})
 
+
 class ProductList(APIView):
 	pass
 
 class ImageList(APIView):
 	pass
+
+def store(request):
+	# if request.method == "POST":
+		
+	return render(request = request,
+								template_name = "store.html")
