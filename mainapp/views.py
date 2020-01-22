@@ -7,12 +7,15 @@ from rest_framework.response import Response
 from rest_framework import status
 from . models import Image,Product
 from . serializers import ProductSerializer,ImageSerializer
-
+import requests
 
 class ProductList(APIView):
 
 	def get(self,request):
-
+		search = request.GET.get('search')
+		category = request.GET.get('cat')
+		sort = request.GET.get('sort')
+		print("YAASS",search,category,sort)
 		product_list = Product.objects.all()
 		serializer = ProductSerializer(product_list,many = True)
 
@@ -51,7 +54,14 @@ class ImageList(APIView):
 		return Response({"success": "Image '{}' created successfully".format(image_saved.imageid)})
 
 def store(request):
-	# if request.method == "POST":
-		
+	search = request.GET.get('search')
+	category = request.GET.get('cat')
+	sort = request.GET.get('sort')
+	# print(search,category,sort)
+	param={'search':search,'cat':category,"sort":sort}
+	getdata = requests.get('http://127.0.0.1:8000/mainapp/productdatabase/',params=param)
+
+	# listdata=
+
 	return render(request = request,
-								template_name = "store.html")
+								template_name = "mainapp/store.html")
