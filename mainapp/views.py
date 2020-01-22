@@ -5,36 +5,50 @@ from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-# from . models import User
-# from . serializers import UserSerializer
-
-
-# class UserList(APIView):
-
-# 	def get(self,request):
-
-# 		users_list = User.objects.all()
-# 		serializer = UserSerializer(users_list,many = True)
-
-# 		return Response(serializer.data)
-
-
-# 	def post(self,request):#only one entry per post request
-# 		# print(response)
-# 		user = request.data.get('simpleform')
-
-# 		# Create an article from the above data
-# 		serializer = UserSerializer(data=user)
-# 		if serializer.is_valid(raise_exception=True):
-# 			user_saved = serializer.save()
-# 		return Response({"success": "User '{}' created successfully".format(user_saved.name)})
+from . models import Image,Product
+from . serializers import ProductSerializer,ImageSerializer
 
 
 class ProductList(APIView):
-	pass
+
+	def get(self,request):
+
+		product_list = Product.objects.all()
+		serializer = ProductSerializer(product_list,many = True)
+
+		return Response(serializer.data)
+
+
+	def post(self,request):#only one entry per post request
+		# print(response)
+		product = request.data.get('product')
+		# Create an article from the above data
+		serializer = ProductSerializer(data=product)
+		if serializer.is_valid(raise_exception=True):
+			product_saved = serializer.save()
+		return Response({"success": "Product '{}' created successfully".format(product_saved.productname)})
+
+
 
 class ImageList(APIView):
-	pass
+	
+	def get(self,request):
+
+		image_list = Image.objects.all()
+		serializer = ImageSerializer(image_list,many = True)
+
+		return Response(serializer.data)
+
+
+	def post(self,request):#only one entry per post request
+		# print(response)
+		image = request.data.get('image')
+
+		# Create an article from the above data
+		serializer = ImageSerializer(data=image)
+		if serializer.is_valid(raise_exception=True):
+			image_saved = serializer.save()
+		return Response({"success": "Image '{}' created successfully".format(image_saved.imageid)})
 
 def store(request):
 	# if request.method == "POST":
