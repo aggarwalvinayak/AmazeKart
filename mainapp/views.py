@@ -9,7 +9,7 @@ from . models import Image,Product
 from . serializers import ProductSerializer,ImageSerializer
 import requests
 from .models import Product,Image
-
+import json
 
 class ProductList(APIView):
 
@@ -81,6 +81,11 @@ def store(request):
 	# print(search,category,sort)
 	param={'search':search,'cat':category,"sort":sort}
 	getdata = requests.get('http://127.0.0.1:8000/mainapp/productdatabase/',params=param)
+	data=getdata.json()
+	# print(11,getdata.json()[0]['productname'])
+	# data=json.loads(json)
+	print(getdata)
+	contextfrontend={'data':data}
 
 	return render(request = request,
-								template_name = "mainapp/store.html")
+								template_name = "mainapp/store.html",context=contextfrontend)
