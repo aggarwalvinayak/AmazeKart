@@ -6,10 +6,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from . models import Image,Product
-from . serializers import ProductSerializer,ImageSerializer
+from . serializers import ProductSerializer
 import requests
 from .models import Product,Image
 import json
+
+from django.contrib.auth import authenticate
+
+from users.models import CustomUser
+
 
 class ProductList(APIView):
 
@@ -54,38 +59,68 @@ class ProductList(APIView):
 
 
 
-class ImageList(APIView):
+class LoginApi(APIView):
 	
 	def get(self,request):
+		return Response("LoginAuth APIView")
 
-		image_list = Image.objects.all()
-		serializer = ImageSerializer(image_list,many = True)
+	def post(self,request):
+		username = request.data.get('email')
+		password = request.data.get('password')
 
-		return Response(serializer.data)
+		print(username,password)
+
+		user = authenticate(username=username, password=password)
+
+		if user is not None:
+			return Response({"Success"})
+
+		else:
+			return Response({"Failure"})
+
+class RegisterApi(APIView):
+	
+	def get(self,request):
+		return Response("Register APIView")
+
+	def post(self,request):
+		f_email = request.data.get('email')
+		f_password = request.data.get('password')
+		f_fname = request.data.get('firstname')
+		f_lname = request.data.get('lastname')
+		f_phoneno = request.data.get('phoneno')
+
+		try:
+			user,created = CustomUser.objects.get_or_create(email = f_email,password = f_password,firstname = f_fname,lastname = f_lname,phoneno = f_phoneno)
+			user.set_password(f_password)
+			user.save()
+			return Response({"Success"})
+
+		except Exception as e:
+			print(e)
+
+		return Response({"Failure"})
 
 
-	def post(self,request):#only one entry per post request
-		# print(response)
-		image = request.data.get('image')
+		if user is not None:
+			return Response({"Success"})
 
-		# Create an article from the above data
-		serializer = ImageSerializer(data=image)
-		if serializer.is_valid(raise_exception=True):
-			image_saved = serializer.save()
-		return Response({"success": "Image '{}' created successfully".format(image_saved.imageid)})
+		else:
+			return Response({"Failure"})
 
-def store(request):
-	search = request.GET.get('search')
-	category = request.GET.get('cat')
-	sort = request.GET.get('sort')
-	# print(search,category,sort)
-	param={'search':search,'cat':category,"sort":sort}
-	getdata = requests.get('http://127.0.0.1:8000/mainapp/productdatabase/',params=param)
-	data=getdata.json()
-	# print(11,getdata.json()[0]['productname'])
-	# data=json.loads(json)
-	print(getdata)
-	contextfrontend={'data':data}
 
-	return render(request = request,
-								template_name = "mainapp/store.html",context=contextfrontend)
+# def store(request):
+# 	search = request.GET.get('search')
+# 	category = request.GET.get('cat')
+# 	sort = request.GET.get('sort')
+# 	# print(search,category,sort)
+# 	param={'search':search,'cat':category,"sort":sort}
+# 	getdata = requests.get('http://127.0.0.1:8000/mainapp/productdatabase/',params=param)
+# 	data=getdata.json()
+# 	# print(11,getdata.json()[0]['productname'])
+# 	# data=json.loads(json)
+# 	print(getdata)
+# 	contextfrontend={'data':data}
+
+# 	return render(request = request,
+# 								template_name = "mainapp/store.html",context=contextfrontend)

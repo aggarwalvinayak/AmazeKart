@@ -1,21 +1,6 @@
 from rest_framework import serializers
 from . models import Product,Image
 
-class ProductSerializer(serializers.ModelSerializer):
-    productid = serializers.IntegerField()
-    productname = serializers.CharField(max_length = 100)
-    price = serializers.IntegerField()
-    category = serializers.CharField(max_length = 100)
-
-    description = serializers.CharField(max_length = 200)
-
-    def create(self, validated_data):
-        return Product.objects.create(**validated_data)
-
-    class Meta:
-        model = Product
-
-        fields = '__all__'
 
 class ImageSerializer(serializers.ModelSerializer):
     imageid=serializers.IntegerField()
@@ -28,3 +13,22 @@ class ImageSerializer(serializers.ModelSerializer):
         model = Image
 
         fields = '__all__'
+
+class ProductSerializer(serializers.ModelSerializer):
+    productid = serializers.IntegerField()
+    productname = serializers.CharField(max_length = 100)
+    price = serializers.IntegerField()
+    category = serializers.CharField(max_length = 100)
+
+    description = serializers.CharField(max_length = 200)
+
+    images = ImageSerializer(read_only = True,source="image_set",many = True)
+
+    def create(self, validated_data):
+        return Product.objects.create(**validated_data)
+
+    class Meta:
+        model = Product
+
+        fields = '__all__'
+

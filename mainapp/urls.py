@@ -1,7 +1,7 @@
 from django.urls import path
 
 # from .views import  UserList,ProductList,ImageList
-from .views import ProductList,ImageList
+from .views import ProductList,LoginApi,RegisterApi
 from . import views
 
 
@@ -11,7 +11,8 @@ app_name = "mainapp"
 urlpatterns = [
     # path('userdatabase/',  UserList.as_view()),
     path('productdatabase/',  ProductList.as_view()),
-    path('imagedatabase/',  ImageList.as_view()),
-    path('store/',  views.store, name="store"),
+    path('loginapi/',  LoginApi.as_view()),
+    path('registerapi/',RegisterApi.as_view()),
+    # path('store/',  views.store, name="store"),
 
 ]
