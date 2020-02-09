@@ -10,10 +10,54 @@ from . serializers import ProductSerializer
 import requests
 from .models import Product,Image
 import json
-
+from os import listdir
+from os.path import isfile, join
 from django.contrib.auth import authenticate
-
+import os
 from users.models import CustomUser
+import time
+# from .forms import FileFieldForm
+from .forms import PhotoForm
+from .models import Photo
+
+countimg=5
+countprod=5
+def firebaseup():
+	from google.cloud import storage
+	from datetime import timedelta
+
+	client=storage.Client()
+	bucket=client.get_bucket('amazekart-bits.appspot.com')
+
+	url=[]
+	onlyfiles = [f for f in listdir("./media/") if isfile(join("./media", f))]
+
+	for f in onlyfiles:
+		# print(f)
+		imageBlob = bucket.blob("/Product/")
+
+		imageBlob=bucket.blob("img"+str(int(round(time.time() * 1000))))
+		imageBlob.upload_from_filename("./media/"+str(f))
+		os.remove("./media/"+f)
+		url.append(imageBlob.generate_signed_url(expiration=timedelta(300)))
+	print(url)
+	return url
+
+def Form(request):
+	return render(request, "mainapp/image_form.html", {})
+
+def Upload(request):
+	global countimg
+	for count, x in enumerate(request.FILES.getlist("files")):
+		def process(f):
+			with open('./media/' + str(count), 'wb+') as destination:
+				# print('hello')
+				for chunk in f.chunks():
+					destination.write(chunk)
+			destination.close()
+		process(x)
+	image_urls=firebaseup()
+	return HttpResponse("File(s) uploaded!")
 
 
 class ProductList(APIView):
