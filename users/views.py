@@ -11,7 +11,7 @@ from django.contrib.auth import logout, authenticate, login
 
 from django.views.decorators.csrf import csrf_exempt
 
-
+@csrf_exempt
 def register(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
@@ -25,14 +25,14 @@ def register(request):
         else:
                 for msg in form.error_messages:
                         messages.error(request, f"{msg}: {form.error_messages[msg]}")
-
+                print(request.POST)
                 return render(request = request,
-                                            template_name = "amazekart/register.html",
+                                            template_name = "registration/signup.html",
                                             context={"form":form})
 
     form = CustomUserCreationForm
     return render(request = request,
-                                template_name = "amazekart/register.html",
+                                template_name = "registration/signup.html",
                                 context={"form":form})
 @csrf_exempt
 def login_request(request):
@@ -41,7 +41,7 @@ def login_request(request):
         password = request.POST.get('password')
         email = request.POST.get('email')
         print()
-        print(username,password)
+        print(email,password)
         user = authenticate(email=email, password=password)
         contextfrontend={
         'email':email,
@@ -56,10 +56,10 @@ def login_request(request):
                 print("Invalid User")
 
         return render(request = request,
-                                template_name = "amazekart/login/login.html",
+                                template_name = "registration/signin.html",
                                 context=contextfrontend)
     return render(request = request,
-                                template_name = "amazekart/login/login.html")
+                                template_name = "registration/signin.html")
 
 def logout_request(request):
     logout(request)

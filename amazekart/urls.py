@@ -23,12 +23,8 @@ app_name = 'amazekart'  # here for namespacing of urls.
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', include('users.urls')),
+    path('', include('users.urls')),
     path('mainapp/', include('mainapp.urls')),
-    path("register/", views.register, name="register"),
-    path("login/", views.login_request, name="login"),
-    path("logout/", views.logout_request, name="logout"),
-
 ]
 
 

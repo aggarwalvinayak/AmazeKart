@@ -6,62 +6,8 @@ from django.http import HttpResponse
 from django.contrib import messages
 
 # from django.contrib.auth.forms import UserCreationForm
-from .forms import NewUserForm
 from django.contrib.auth import logout, authenticate, login
 
 from django.views.decorators.csrf import csrf_exempt
 
 
-def register(request):
-	if request.method == "POST":
-		form = NewUserForm(request.POST)
-		if form.is_valid():
-				user = form.save()
-				username = form.cleaned_data.get('username')
-				messages.success(request, f"New account created: {username}")
-				login(request, user)
-				return redirect("/homepage")
-
-		else:
-				for msg in form.error_messages:
-						messages.error(request, f"{msg}: {form.error_messages[msg]}")
-
-				return render(request = request,
-											template_name = "amazekart/register.html",
-											context={"form":form})
-
-	form = NewUserForm
-	return render(request = request,
-								template_name = "amazekart/register.html",
-								context={"form":form})
-@csrf_exempt
-def login_request(request):
-	if request.method == "POST":
-
-		password = request.POST.get('password')
-		username = request.POST.get('username')
-		print()
-		print(username,password)
-		user = authenticate(username=username, password=password)
-		contextfrontend={
-		'username':username,
-		'password':password,
-		}
-		if user is not None: 
-				login(request, user)
-				print("User Logged in")
-				return redirect("homepage.html")
-
-		else:
-				print("Invalid User")
-
-		return render(request = request,
-								template_name = "amazekart/login/login.html",
-								context=contextfrontend)
-	return render(request = request,
-								template_name = "amazekart/login/login.html")
-
-def logout_request(request):
-	logout(request)
-	messages.info(request, "Logged out successfully!")
-	return redirect("amazekart:homepage")

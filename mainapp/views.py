@@ -146,13 +146,6 @@ class RegisterApi(APIView):
 		return Response({"Failure"})
 
 
-		if user is not None:
-			return Response({"Success"})
-
-		else:
-			return Response({"Failure"})
-
-
 # def store(request):
 # 	search = request.GET.get('search')
 # 	category = request.GET.get('cat')
