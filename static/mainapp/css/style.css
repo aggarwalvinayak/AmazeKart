@@ -471,11 +471,11 @@ textarea.input {
 
 .header-search form .input-select {
   margin-right: -4px;
-  border-radius: 40px 0px 0px 40px;
+  border-radius: 20px 0px 0px 40px;
 }
 
 .header-search form .input {
-  width: calc(100% - 260px);
+  width: calc(100% - 310px);
   margin-right: -4px;
 }
 
@@ -483,8 +483,8 @@ textarea.input {
   height: 40px;
   width: 100px;
   background: #D10024;
-  color: #D10024;
-  font-weight: 700;
+  color: #FFFFFF;
+  font-weight: 800;
   border: none;
   border-radius: 0px 40px 40px 0px;
 }
@@ -872,6 +872,8 @@ textarea.input {
 
 .product .product-img>img {
   width: 100%;
+  /*height: 100%;*/
+  object-fit: contain;
 }
 
 .product .product-img .product-label {

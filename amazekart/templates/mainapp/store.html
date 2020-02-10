@@ -101,13 +101,13 @@
 						<div class="col-md-3 clearfix">
 							<div class="header-ctn">
 								<!-- Wishlist -->
-								<div>
+								<!-- <div>
 									<a href="#">
 										<i class="fa fa-heart-o"></i>
 										<span>Your Wishlist</span>
 										<div class="qty">2</div>
 									</a>
-								</div>
+								</div> -->
 								<!-- /Wishlist -->
 
 								<!-- Cart -->
@@ -439,7 +439,7 @@
 							<div class="col-md-4 col-xs-6">
 								<div class="product">
 									<div class="product-img">
-										<img src="./img/product01.png" alt="">
+										<img src={{product.images.0.imageurl}} alt="" height="230px">
 										<div class="product-label">
 											<!-- <span class="sale">-30%</span> -->
 											<span class="new">NEW</span>
@@ -626,12 +626,12 @@
 		<!-- /FOOTER -->
 
 		<!-- jQuery Plugins -->
-		<script src="js/jquery.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<script src="js/slick.min.js"></script>
-		<script src="js/nouislider.min.js"></script>
-		<script src="js/jquery.zoom.min.js"></script>
-		<script src="js/main.js"></script>
+		<script src="{% static "/mainapp/js/jquery.min.js"%} "></script>
+		<script src="{% static "/mainapp/js/bootstrap.min.js"%} "></script>
+		<script src="{% static "/mainapp/js/slick.min.js"%} "></script>
+		<script src="{% static "/mainapp/js/nouislider.min.js"%} "></script>
+		<script src="{% static "/mainapp/js/jquery.zoom.min.js"%} "></script>
+		<script src="{% static "/mainapp/js/main.js"%} "></script>
 
 	</body>
 </html>

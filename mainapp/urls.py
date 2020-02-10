@@ -13,7 +13,7 @@ urlpatterns = [
 	path('productdatabase/',  ProductList.as_view()),
 	path('loginapi/',  LoginApi.as_view()),
 	path('registerapi/',RegisterApi.as_view()),
-	# path('store/',  views.store, name="store"),
+	path('store/',  views.store, name="store"),
 	# path('image/', views.DocumentCreate, name = 'hotel_images'),
 	path('form/', views.Form),
 	path('upload/', views.Upload),

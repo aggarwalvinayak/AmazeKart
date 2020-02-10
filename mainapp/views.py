@@ -16,9 +16,6 @@ from django.contrib.auth import authenticate
 import os
 from users.models import CustomUser
 import time
-# from .forms import FileFieldForm
-from .forms import PhotoForm
-from .models import Photo
 
 countimg=5
 countprod=5
@@ -146,18 +143,18 @@ class RegisterApi(APIView):
 		return Response({"Failure"})
 
 
-# def store(request):
-# 	search = request.GET.get('search')
-# 	category = request.GET.get('cat')
-# 	sort = request.GET.get('sort')
-# 	# print(search,category,sort)
-# 	param={'search':search,'cat':category,"sort":sort}
-# 	getdata = requests.get('http://127.0.0.1:8000/mainapp/productdatabase/',params=param)
-# 	data=getdata.json()
-# 	# print(11,getdata.json()[0]['productname'])
-# 	# data=json.loads(json)
-# 	print(getdata)
-# 	contextfrontend={'data':data}
+def store(request):
+	search = request.GET.get('search')
+	category = request.GET.get('cat')
+	sort = request.GET.get('sort')
+	# print(search,category,sort)
+	param={'search':search,'cat':category,"sort":sort}
+	getdata = requests.get('http://127.0.0.1:8000/mainapp/productdatabase/',params=param)
+	data=getdata.json()
+	# print(11,getdata.json()[0]['productname'])
+	# data=json.loads(json)
+	print(getdata)
+	contextfrontend={'data':data}
 
-# 	return render(request = request,
-# 								template_name = "mainapp/store.html",context=contextfrontend)
+	return render(request = request,
+								template_name = "mainapp/store.html",context=contextfrontend)

@@ -50,7 +50,7 @@ def login_request(request):
         if user is not None: 
                 login(request, user)
                 print("User Logged in")
-                return redirect("homepage.html")
+                return redirect("../mainapp/store")
 
         else:
                 print("Invalid User")
