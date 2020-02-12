@@ -74,7 +74,7 @@ class ProductList(APIView):
 		sort = request.GET.get('sort')
 		# print("YAASS",search,category,sort)
 		if(category and category!='All'):
-			cat_filter=Product.objects.filter(category='Electronics')
+			cat_filter=Product.objects.filter(category=category)
 		else:
 			cat_filter=Product.objects.all()
 		if(search):
