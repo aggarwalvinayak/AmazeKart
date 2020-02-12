@@ -437,8 +437,9 @@
 							<!-- product -->
 {% for product in data %}
 
-<div id="myModal" class="modal">
-  <span class="close cursor" onclick="closeModal()">&times;</span>
+<div id="myModal{{product.id}}" class="modal">
+
+  <span class="close cursor" onclick="closeModal({{product.id}})">&times;</span>
   <div class="modal-content">
 
     <div class="mySlides">
@@ -493,7 +494,7 @@
 							<div class="col-md-4 col-xs-6">
 								<div class="product">
 									<div class="product-img">
-										<img src={{product.images.0.imageurl}} onclick="openModal();currentSlide(1)" class="hover-shadow" alt="" height="230px">
+										<img src={{product.images.0.imageurl}} onclick="openModal({{product.id}});currentSlide(1)" class="hover-shadow" alt="" height="230px">
 										<div class="product-label">
 											<!-- <span class="sale">-30%</span> -->
 											<span class="new">NEW</span>

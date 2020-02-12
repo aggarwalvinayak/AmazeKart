@@ -20,13 +20,13 @@ span.onclick = function() {
 }
 
 // Open the Modal
-function openModal() {
-  document.getElementById("myModal").style.display = "block";
+function openModal(n) {
+  document.getElementById("myModal"+n).style.display = "block";
 }
 
 // Close the Modal
-function closeModal() {
-  document.getElementById("myModal").style.display = "none";
+function closeModal(n) {
+  document.getElementById("myModal"+n).style.display = "none";
 }
 
 var slideIndex = 1;
