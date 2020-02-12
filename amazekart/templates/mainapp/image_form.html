@@ -5,7 +5,7 @@
  		<link type="text/css" rel="stylesheet" href="{% static "newproduct/css/materialize.css"%} "/>
       <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
             <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<script>
+	<script>
      $(document).ready(function(){
     $('select').formSelect();
   });
@@ -21,23 +21,23 @@
 
 <div class="input-field inline">
 
-	<input type="text">
+	<input type="text" id="name" name="name">
 </div>
 
 	<br><br>Description about the product:
 <div class="input-field col s12">
-          <textarea id="textarea1" class="materialize-textarea"></textarea>
-          <label for="textarea1">Enter short description about the product</label>
+          <textarea id="desc" name="desc" class="materialize-textarea"></textarea>
+          <label for="desc">Enter short description about the product</label>
         </div>
 	<br><br>Price: ₹
 
 <div class="input-field inline">
 
-	<input type="text">
+	<input type="text" id="price" name="price">
 </div>
 	<br><br>Category:<br>
 
-	<div class="input-field col s12 m6">
+	<div class="input-field col s12 m6" name="cat" id="cat">
     <select class="icons">
       <option value="" disabled selected>Choose your option</option>
       <option value="" data-icon="{% static "newproduct/images/cat01.png"%}" class="left">example 1</option>

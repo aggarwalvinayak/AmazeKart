@@ -17,8 +17,6 @@ import os
 from users.models import CustomUser
 import time
 
-countimg=5
-countprod=5
 def firebaseup():
 	from google.cloud import storage
 	from datetime import timedelta
@@ -44,17 +42,28 @@ def Form(request):
 	return render(request, "mainapp/image_form.html", {})
 
 def Upload(request):
-	global countimg
-	for count, x in enumerate(request.FILES.getlist("files")):
-		def process(f):
-			with open('./media/' + str(count), 'wb+') as destination:
-				# print('hello')
-				for chunk in f.chunks():
-					destination.write(chunk)
-			destination.close()
-		process(x)
-	image_urls=firebaseup()
-	return HttpResponse("File(s) uploaded!")
+	productname = request.POST.get('name')
+	productcat = request.POST.get('cat')
+	productprice = request.POST.get('price')
+	productdesc = request.POST.get('desc')
+	if request.user.is_authenticated:
+		for count, x in enumerate(request.FILES.getlist("files")):
+			def process(f):
+				with open('./media/' + str(count), 'wb+') as destination:
+					# print('hello')
+					for chunk in f.chunks():
+						destination.write(chunk)
+				destination.close()
+			process(x)
+		image_urls=firebaseup()
+		product=Product(productid=1,productname=productname,price=productprice,description=productdesc,user=request.user)
+		product.save()
+		for image in image_urls:
+			img=Image(imageid=1,imageurl=image,product=product)
+			img.save()
+		return HttpResponse("File(s) uploaded!")
+	else:
+		return HttpResponse("Please login before selling a product")
 
 
 class ProductList(APIView):
