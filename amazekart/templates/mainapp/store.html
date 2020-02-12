@@ -74,7 +74,7 @@
 						<!-- /LOGO -->
 
 						<!-- SEARCH BAR -->
-						<div class="col-md-6">
+						<div class="col-md-7">
 							<div class="header-search">
 								<form method='get' >
 									<select class="input-select" name='cat' value="{{request.GET.cat}}">
@@ -468,7 +468,68 @@
 										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> View More Details</button>
 									</div>
 								</div>
+
 							</div>
+						
+<div class="row">
+  <div class="column">
+    <img src={{product.images.0.imageurl}} onclick="openModal();currentSlide(1)" class="hover-shadow" width=100% height=230px>
+  </div>
+
+</div>
+
+
+								<div id="myModal" class="modal">
+  <span class="close cursor" onclick="closeModal()">&times;</span>
+  <div class="modal-content">
+
+    <div class="mySlides">
+      <div class="numbertext">1 / 4</div>
+      <img src={{product.images.0.imageurl}} style="width:100px" height="230px">
+    </div>
+
+    <div class="mySlides">
+      <div class="numbertext">2 / 4</div>
+      <img src={{product.images.0.imageurl}} style="width:100px" height="230px">
+    </div>
+
+    <div class="mySlides">
+      <div class="numbertext">3 / 4</div>
+      <img src={{product.images.0.imageurl}} style="width:100px" height="230px">
+    </div>
+
+    <div class="mySlides">
+      <div class="numbertext">4 / 4</div>
+      <img src={{product.images.0.imageurl}} style="width:100px" height="230px">
+    </div>
+
+    <!-- Next/previous controls -->
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+    <!-- Caption text -->
+    <div class="caption-container">
+      <p id="caption"></p>
+    </div>
+
+    <!-- Thumbnail image controls -->
+    <div class="column">
+      <img class="demo" src={{product.images.0.imageurl}} onclick="currentSlide(1)" alt="Nature">
+    </div>
+
+    <div class="column">
+      <img class="demo" src={{product.images.0.imageurl}} onclick="currentSlide(2)" alt="Snow">
+    </div>
+
+    <div class="column">
+      <img class="demo" src={{product.images.0.imageurl}} onclick="currentSlide(3)" alt="Mountains">
+    </div>
+
+    <div class="column">
+      <img class="demo" src={{product.images.0.imageurl}} onclick="currentSlide(4)" alt="Lights">
+    </div>
+  </div>
+</div>
 							{% endfor %}
 
 						</div>
@@ -632,6 +693,7 @@
 		<script src="{% static "/mainapp/js/nouislider.min.js"%} "></script>
 		<script src="{% static "/mainapp/js/jquery.zoom.min.js"%} "></script>
 		<script src="{% static "/mainapp/js/main.js"%} "></script>
+		<script src="{% static "/mainapp/js/popup.js"%} "></script>
 
 	</body>
 </html>
