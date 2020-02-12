@@ -905,7 +905,7 @@ textarea.input {
   padding: 15px;
   background-color: #FFF;
   text-align: center;
-  z-index: 20;
+  z-index: -10;
 }
 
 .product .product-body .product-category {
@@ -1029,7 +1029,7 @@ textarea.input {
   transform: translateY(0%);
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
-  z-index: 2;
+  z-index: -50;
 }
 
 .product:hover .add-to-cart {

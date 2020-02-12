@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 
 # from django.contrib.auth.forms import UserCreationForm
-from .forms import CustomUserCreationForm
+from .models import CustomUser
 from django.contrib.auth import logout, authenticate, login
 
 from django.views.decorators.csrf import csrf_exempt
@@ -14,26 +14,35 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def register(request):
     if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-                user = form.save()
-                email = form.cleaned_data.get('email')
-                messages.success(request, f"New account created: {email}")
-                login(request, user)
-                return redirect("/homepage")
+        print()
+        print(request.POST)
+        print()
+        print()
+        f_email = request.POST.get('email')
+        f_password = request.POST.get('password')
+        f_fname = request.POST.get('firstname')
+        f_lname = request.POST.get('lastname')
+        f_phoneno = request.POST.get('phoneno')
+        print(f_email,f_password,f_fname,f_lname,f_phoneno)
+        try:
+            user,created = CustomUser.objects.get_or_create(email = f_email,password = f_password,firstname = f_fname,lastname = f_lname,phoneno = f_phoneno)
+            user.set_password(f_password)
+            user.save()
 
-        else:
-                for msg in form.error_messages:
-                        messages.error(request, f"{msg}: {form.error_messages[msg]}")
-                print(request.POST)
-                return render(request = request,
-                                            template_name = "registration/signup.html",
-                                            context={"form":form})
+            messages.success(request, f"New account created: {f_email}")
+            login(request, user)
+            return redirect("/homepage")
 
-    form = CustomUserCreationForm
+        except Exception as e:
+            print(e)
+            return render(request = request,
+                                        template_name = "registration/signup.html",
+                                        )
+
     return render(request = request,
                                 template_name = "registration/signup.html",
-                                context={"form":form})
+                                )
+
 @csrf_exempt
 def login_request(request):
     if request.method == "POST":

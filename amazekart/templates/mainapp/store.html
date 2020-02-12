@@ -435,51 +435,9 @@
 						<!-- store products -->
 						<div class="row">
 							<!-- product -->
-							{% for product in data %}
-							<div class="col-md-4 col-xs-6">
-								<div class="product">
-									<div class="product-img">
-										<img src={{product.images.0.imageurl}} alt="" height="230px">
-										<div class="product-label">
-											<!-- <span class="sale">-30%</span> -->
-											<span class="new">NEW</span>
-										</div>
-									</div>
-									<div class="product-body">
-										<p class="product-category">{{product.category}}</p>
-										<h3 class="product-name"><a href="#">{{product.productname}}</a></h3>
-										<h4 class="product-price">₹ {{product.price}}</h4>
-										<p class="product-description">{{product.description|slice:70}}</p>
+{% for product in data %}
 
-										<div class="product-rating">
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-										<!-- <div class="product-btns">
-											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-										</div> -->
-									</div>
-									<div class="add-to-cart">
-										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> View More Details</button>
-									</div>
-								</div>
-
-							</div>
-						
-<div class="row">
-  <div class="column">
-    <img src={{product.images.0.imageurl}} onclick="openModal();currentSlide(1)" class="hover-shadow" width=100% height=230px>
-  </div>
-
-</div>
-
-
-								<div id="myModal" class="modal">
+<div id="myModal" class="modal">
   <span class="close cursor" onclick="closeModal()">&times;</span>
   <div class="modal-content">
 
@@ -514,7 +472,7 @@
 
     <!-- Thumbnail image controls -->
     <div class="column">
-      <img class="demo" src={{product.images.0.imageurl}} onclick="currentSlide(1)" width=100% height=130px alt="Nature">
+      <img class="demo" src={{product.images.0.imageurl}} onclick="currentSlide(1)" width=100% height=130px alt="Phone">
     </div>
 
     <div class="column">
@@ -530,6 +488,52 @@
     </div>
   </div>
 </div>
+
+
+							<div class="col-md-4 col-xs-6">
+								<div class="product">
+									<div class="product-img">
+										<img src={{product.images.0.imageurl}} onclick="openModal();currentSlide(1)" class="hover-shadow" alt="" height="230px">
+										<div class="product-label">
+											<!-- <span class="sale">-30%</span> -->
+											<span class="new">NEW</span>
+										</div>
+									</div>
+									<div class="product-body">
+										<p class="product-category">{{product.category}}</p>
+										<h3 class="product-name"><a href="#">{{product.productname}}</a></h3>
+										<h4 class="product-price">₹ {{product.price}}</h4>
+										<p class="product-description">{{product.description|slice:70}}</p>
+
+										<div class="product-rating">
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+										</div>
+										<!-- <div class="product-btns">
+											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
+											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
+										</div> -->
+									</div>
+									<div class="add-to-cart">
+										<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> View More Details</button>
+									</div>
+								</div>
+
+							</div>
+						
+<!-- <div class="row">
+  <div class="column">
+    <img src={{product.images.0.imageurl}} onclick="openModal();currentSlide(1)" class="hover-shadow" width=100% height=230px>
+  </div>
+
+</div> -->
+
+
+	
 							{% endfor %}
 
 						</div>
