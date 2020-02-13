@@ -123,7 +123,9 @@ class LoginApi(APIView):
 		user = authenticate(username=username, password=password)
 
 		if user is not None:
-			return Response({"Success"})
+			contextfrontend  = {"email":user.email,"firstname":user.firstname,
+						"lastname":user.lastname,"phoneno":user.phoneno}
+			return Response(contextfrontend)
 
 		else:
 			return Response({"Failure"})
