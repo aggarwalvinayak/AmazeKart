@@ -128,7 +128,7 @@ class LoginApi(APIView):
 			return Response(contextfrontend)
 
 		else:
-			return Response({"Failure"})
+			return Response({"F"})
 
 class RegisterApi(APIView):
 	
