@@ -30,23 +30,23 @@ function closeModal(n) {
 }
 
 var slideIndex = 1;
-showSlides(slideIndex);
+showSlides(slideIndex,id);
 
 // Next/previous controls
-function plusSlides(n) {
-  showSlides(slideIndex += n);
+function plusSlides(n,id) {
+  showSlides(slideIndex += n,id);
 }
 
 // Thumbnail image controls
-function currentSlide(n) {
-  showSlides(slideIndex = n);
+function currentSlide(n,id) {
+  showSlides(slideIndex = n,id);
 }
 
-function showSlides(n) {
+function showSlides(n,id) {
   var i;
-  var slides = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("demo");
-  var captionText = document.getElementById("caption");
+  var slides = document.getElementsByClassName("mySlides"+id);
+  var dots = document.getElementsByClassName("demo"+id);
+  var captionText = document.getElementById("caption"+id);
   if (n > slides.length) {slideIndex = 1}
   if (n < 1) {slideIndex = slides.length}
   for (i = 0; i < slides.length; i++) {

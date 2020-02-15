@@ -449,33 +449,33 @@
   <div class="modal-content">
     {% if product.images.0.imageurl %}
 
-    <div class="mySlides">
+    <div class="mySlides{{product.id}}">
       <div class="numbertext">1 / 4</div>
       <img src={{product.images.0.imageurl}} width=100% height=230px>
     </div>
     {%endif %}
     {% if product.images.1.imageurl %}
-    <div class="mySlides">
+    <div class="mySlides{{product.id}}">
       <div class="numbertext">2 / 4</div>
       <img src={{product.images.1.imageurl}} width=100% height=230px>
     </div>
     {% endif %}
     {% if product.images.2.imageurl %}
 
-    <div class="mySlides">
+    <div class="mySlides{{product.id}}">
       <div class="numbertext">3 / 4</div>
       <img src={{product.images.0.imageurl}} width=100% height=230px>
     </div>
     {% endif %}
     {% if product.images.3.imageurl %}
-    <div class="mySlides">
+    <div class="mySlides{{product.id}}">
       <div class="numbertext">4 / 4</div>
       <img src={{product.images.0.imageurl}} width=100% height=230px>
     </div>
     {% endif %}
     <!-- Next/previous controls -->
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    <a class="prev" onclick="plusSlides(-1,{{product.id}})">&#10094;</a>
+    <a class="next" onclick="plusSlides(1,{{product.id}})">&#10095;</a>
 
     <!-- Caption text -->
     <div class="caption-container">
@@ -485,22 +485,22 @@
     <!-- Thumbnail image controls -->
     {% if product.images.0.imageurl %}
     <div class="column">
-      <img class="demo" src={{product.images.0.imageurl}} onclick="currentSlide(1)" width=100% height=130px alt="Phone">
+      <img class="demo{{product.id}}" src={{product.images.0.imageurl}} onclick="currentSlide(1,{{product.id}})" width=100% height=130px alt="Phone">
     </div>
 {% endif %}
     {% if product.images.1.imageurl %}
     <div class="column">
-      <img class="demo" src={{product.images.0.imageurl}} onclick="currentSlide(2)" width=100% height=130px alt="Snow">
+      <img class="demo{{product.id}}" src={{product.images.0.imageurl}} onclick="currentSlide(2,{{product.id}})" width=100% height=130px alt="Snow">
     </div>
 {% endif %}
     {% if product.images.2.imageurl %}
     <div class="column">
-      <img class="demo" src={{product.images.0.imageurl}} onclick="currentSlide(3)" width=100% height=130px alt="Mountains">
+      <img class="demo{{product.id}}" src={{product.images.0.imageurl}} onclick="currentSlide(3,{{product.id}})" width=100% height=130px alt="Mountains">
     </div>
 {% endif %}
     {% if product.images.3.imageurl %}
     <div class="column">
-      <img class="demo" src={{product.images.0.imageurl}} onclick="currentSlide(4)" width=100% height=130px alt="Lights">
+      <img class="demo{{product.id}}" src={{product.images.0.imageurl}} onclick="currentSlide(4,{{product.id}})" width=100% height=130px alt="Lights">
     </div>
           {% endif %}
 
@@ -511,7 +511,7 @@
 							<div class="col-md-4 col-xs-6">
 								<div class="product">
 									<div class="product-img">
-										<img src={{product.images.0.imageurl}} onclick="openModal({{product.id}});currentSlide(1)" class="hover-shadow" alt="" height="230px">
+										<img src={{product.images.0.imageurl}} onclick="openModal({{product.id}});currentSlide(1,{{product.id}})" class="hover-shadow" alt="" height="230px">
 										<div class="product-label">
 											<!-- <span class="sale">-30%</span> -->
 											<span class="new">NEW</span>
