@@ -72,7 +72,18 @@ class ProductList(APIView):
 		search = request.GET.get('search')
 		category = request.GET.get('cat')
 		sort = request.GET.get('sort')
-		# print("YAASS",search,category,sort)
+		user1 = request.GET.get('user')
+
+		if(user1):
+			if request.user.is_authenticated:
+				user_selling=Product.objects.filter(user=request.user)
+				serializer = ProductSerializer(user_selling,many = True)
+				return Response(serializer.data)
+
+			else:
+				return HttpResponse("Please Login to view this .")
+
+
 		if(category and category!='All'):
 			cat_filter=Product.objects.filter(category=category)
 		else:
@@ -91,7 +102,7 @@ class ProductList(APIView):
 			search_filter=cat_filter
 			
 
-		print(search_filter)
+		# print(search_filter)
 		product_list = search_filter
 		serializer = ProductSerializer(product_list,many = True)
 
@@ -151,7 +162,7 @@ class RegisterApi(APIView):
 		except Exception as e:
 			print(e)
 
-		return Response({"Failure"})
+		return Response({"F"})
 
 
 def store(request):
