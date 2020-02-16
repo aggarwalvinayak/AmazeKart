@@ -446,72 +446,75 @@
 <div id="myModal{{product.id}}" class="modal">
 
   <span class="close cursor" onclick="closeModal({{product.id}})">&times;</span>
-  <div class="modal-content">
+  <div class="modal-content" >
     {% if product.images.0.imageurl %}
 
-    <div class="mySlides{{product.id}}">
+    <div class="mySlides{{product.id}}" STYLE=" object-fit:contain;horizontal-align:middle; max-width: 200px;max-height: 150px; ">
       <div class="numbertext">1 / 4</div>
-      <img src={{product.images.0.imageurl}} width=100% height=230px>
+      <img src={{product.images.0.imageurl}} height=230px>
     </div>
     {%endif %}
     {% if product.images.1.imageurl %}
-    <div class="mySlides{{product.id}}">
+    <div class="mySlides{{product.id}}" STYLE="object-fit: contain;horizontal-align:middle; max-width: 200px;max-height: 150px; ">
       <div class="numbertext">2 / 4</div>
-      <img src={{product.images.1.imageurl}} width=100% height=230px>
+      <img src={{product.images.1.imageurl}} height=230px>
     </div>
     {% endif %}
     {% if product.images.2.imageurl %}
 
-    <div class="mySlides{{product.id}}">
+    <div class="mySlides{{product.id}}" STYLE="object-fit: contain;horizontal-align:middle; max-width: 200px;max-height: 150px;">
       <div class="numbertext">3 / 4</div>
-      <img src={{product.images.0.imageurl}} width=100% height=230px>
+      <img src={{product.images.2.imageurl}} height=230px>
     </div>
     {% endif %}
     {% if product.images.3.imageurl %}
-    <div class="mySlides{{product.id}}">
+    <div class="mySlides{{product.id}}" STYLE="object-fit: contain;horizontal-align:middle; max-width: 200px;max-height: 150px;"> 
       <div class="numbertext">4 / 4</div>
-      <img src={{product.images.0.imageurl}} width=100% height=230px>
+      <img src={{product.images.3.imageurl}} height=230px>
     </div>
     {% endif %}
     <!-- Next/previous controls -->
     <a class="prev" onclick="plusSlides(-1,{{product.id}})">&#10094;</a>
     <a class="next" onclick="plusSlides(1,{{product.id}})">&#10095;</a>
 
-    <!-- Caption text -->
+    <!-- Caption text --><br><br><br><br><br>
     <div class="caption-container">
-      <p id="caption"></p>
+      <p id="caption" style="font-size:20px">{{product.productname}}<br>{{product.description}}<br>Rs. {{product.price}}<br><br><br>{{product.user.firstname}}  {{product.user.lastname}}<br>{{product.user.phoneno}}M</p>
+      <!-- <p id="caption" style="font-size:20px">{{product.productname}}</p> -->
     </div>
+    <br><br>
+    <br><br>
+    <br><br>
+    <br><br>
 
     <!-- Thumbnail image controls -->
     {% if product.images.0.imageurl %}
-    <div class="column">
-      <img class="demo{{product.id}}" src={{product.images.0.imageurl}} onclick="currentSlide(1,{{product.id}})" width=100% height=130px alt="Phone">
+    <div class="column" STYLE="object-fit: contain; ">
+      <img class="demo" src={{product.images.0.imageurl}} onclick="currentSlide(1,{{product.id}})" height=130px alt="Phone">
     </div>
 {% endif %}
     {% if product.images.1.imageurl %}
-    <div class="column">
-      <img class="demo{{product.id}}" src={{product.images.0.imageurl}} onclick="currentSlide(2,{{product.id}})" width=100% height=130px alt="Snow">
+    <div class="column" STYLE="object-fit: contain;">
+      <img class="demo" src={{product.images.1.imageurl}} onclick="currentSlide(2,{{product.id}})"  height=130px alt="Snow">
     </div>
 {% endif %}
     {% if product.images.2.imageurl %}
-    <div class="column">
-      <img class="demo{{product.id}}" src={{product.images.0.imageurl}} onclick="currentSlide(3,{{product.id}})" width=100% height=130px alt="Mountains">
+    <div class="column" STYLE="object-fit: contain;">
+      <img class="demo" src={{product.images.2.imageurl}} onclick="currentSlide(3,{{product.id}})"  height=130px alt="Mountains">
     </div>
 {% endif %}
     {% if product.images.3.imageurl %}
-    <div class="column">
-      <img class="demo{{product.id}}" src={{product.images.0.imageurl}} onclick="currentSlide(4,{{product.id}})" width=100% height=130px alt="Lights">
+    <div class="column" STYLE="object-fit: contain;">
+      <img class="demo" src={{product.images.3.imageurl}} onclick="currentSlide(4,{{product.id}})"  height=130px alt="Lights">
     </div>
           {% endif %}
 
   </div>
 </div>
-
-
-							<div class="col-md-4 col-xs-6">
+							<div class="col-md-4 col-xs-6" onclick="openModal({{product.id}});currentSlide(1,{{product.id}})">
 								<div class="product">
 									<div class="product-img">
-										<img src={{product.images.0.imageurl}} onclick="openModal({{product.id}});currentSlide(1,{{product.id}})" class="hover-shadow" alt="" height="230px">
+										<img src={{product.images.0.imageurl}}  class="hover-shadow" alt="" height="230px">
 										<div class="product-label">
 											<!-- <span class="sale">-30%</span> -->
 											<span class="new">NEW</span>
@@ -530,11 +533,7 @@
 											<i class="fa fa-star"></i>
 											<i class="fa fa-star"></i>
 										</div>
-										<!-- <div class="product-btns">
-											<button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
-											<button class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></button>
-											<button class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></button>
-										</div> -->
+										
 									</div>
 									<div class="add-to-cart">
 										<button class="add-to-cart-btn"  ><i class="fa fa-shopping-cart"></i> View More Details</button>
@@ -542,16 +541,6 @@
 								</div>
 
 							</div>
-						
-<!-- <div class="row">
-  <div class="column">
-    <img src={{product.images.0.imageurl}} onclick="openModal();currentSlide(1)" class="hover-shadow" width=100% height=230px>
-  </div>
-
-</div> -->
-
-
-	
 							{% endfor %}
 
 						</div>

@@ -43,6 +43,7 @@ def firebaseup():
 
 def Form(request):
 	return render(request, "mainapp/image_form.html", {})
+	
 @csrf_exempt
 def Upload(request):
 	productname = request.POST.get('name')
@@ -76,17 +77,22 @@ class ProductList(APIView):
 		search = request.GET.get('search')
 		category = request.GET.get('cat')
 		sort = request.GET.get('sort')
+		email = request.GET.get('email')
 		user1 = request.GET.get('user')
-
 		if(user1):
 			if request.user.is_authenticated:
+				print("YAASS")
 				user_selling=Product.objects.filter(user=request.user)
 				serializer = ProductSerializer(user_selling,many = True)
 				return Response(serializer.data)
 
 			else:
 				return HttpResponse("Please Login to view this .")
-
+		if(email):
+			uss = CustomUser.objects.get(email=email)
+			user_selling=Product.objects.filter(user=uss)
+			serializer = ProductSerializer(user_selling,many = True)
+			return Response(serializer.data)	
 
 		if(category and category!='All'):
 			cat_filter=Product.objects.filter(category=category)
@@ -114,41 +120,32 @@ class ProductList(APIView):
 
 
 	def post(self,request):#only one entry per post request
-		# print(response)
-		product = request.data.get('product')
-		# Create an article from the above data
-		serializer = ProductSerializer(data=product)
-		if serializer.is_valid(raise_exception=True):
-			product_saved = serializer.save()
-		return Response({"success": "Product '{}' created successfully".format(product_saved.productname)})
+		productname = request.POST.get('name')
+		productcat = request.POST.get('cat')
+		productprice = request.POST.get('price')
+		productdesc = request.POST.get('desc')
+		image_urls=request.POST.get('image')
+		email=request.POST.get('email')
 
-class NewProduct(APIView):
-	def post(self,request):
-		
-		if request.user.is_authenticated:
-			productname = request.POST.get('name')
-			productcat = request.POST.get('cat')
-			productprice = request.POST.get('price')
-			productdesc = request.POST.get('desc')
-			image_urls=request.POST.get('image')
-			product=Product(productid=1,productname=productname,price=productprice,description=productdesc,user=request.user)
-			product.save()
-			for image in image_urls:
-				img=Image(imageid=1,imageurl=image,product=product)
-				img.save()
-			return Response("File(s) uploaded!")
-		else:
-			return Response("Login karo")
+		product=Product(productid=1,productname=productname,price=productprice,description=productdesc,user=CustomUser.objects.get(email=email))
+		product.save()
+		for image in image_urls:
+			img=Image(imageid=1,imageurl=image,product=product)
+			img.save()
+		return Response("File(s) uploaded!")
 
 @csrf_exempt
 def LoginApi(request):
 	
 	if request.method == "POST":
 
-		dataa = request.body.decode('utf-8')
-		dataaa=json.loads(dataa)
-		email=dataaa['email']
-		password = dataaa['password']
+		# dataa = request.body.decode('utf-8')
+		# dataaa=json.loads(dataa)
+		# email=dataaa['email']
+		# password = dataaa['password']
+		email=request.POST.get('email')
+		password=request.POST.get('password')
+
 		print()
 		print(email,password)
 		user = authenticate(email=email, password=password)

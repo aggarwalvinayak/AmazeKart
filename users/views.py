@@ -47,10 +47,8 @@ def register(request):
 def login_request(request):
     if request.method == "POST":
 
-        dataa = request.body.decode('utf-8')
-        dataaa=json.loads(dataa)
-        email=dataaa['email']
-        password = dataaa['password']
+        password = request.POST.get('password')
+        email = request.POST.get('email')
         print()
         print(email,password)
         user = authenticate(email=email, password=password)
