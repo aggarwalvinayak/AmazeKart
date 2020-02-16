@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 import json
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
@@ -17,6 +17,8 @@ import os
 from users.models import CustomUser
 import time
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.decorators import api_view, renderer_classes
+from django.http import JsonResponse
 
 def firebaseup():
 	from google.cloud import storage
@@ -137,34 +139,31 @@ class NewProduct(APIView):
 			return Response("File(s) uploaded!")
 		else:
 			return Response("Login karo")
+
 @csrf_exempt
 def LoginApi(request):
 	
-	# def get(self,request):
-	# 	return Response("LoginAuth APIView")
+	if request.method == "POST":
 
-	# def post(self,request):
-	# if 
-	print(request.POST)
-	dataa = request.body.decode('utf-8')
-	dataaa=json.loads(dataa)
-	username=dataaa['email']
-	password = dataaa['password']
-
-	print(username,password)
-
-	user = authenticate(username=username, password=password)
-	print("hekiasfd")
-
-	if user is not None:
-		login(user,request)
-		print("hekiasfd")
-		contextfrontend  = {"email":user.email,"firstname":user.firstname,
+		dataa = request.body.decode('utf-8')
+		dataaa=json.loads(dataa)
+		email=dataaa['email']
+		password = dataaa['password']
+		print()
+		print(email,password)
+		user = authenticate(email=email, password=password)
+		
+		if user is not None: 
+				login(request, user)
+				print("User Logged in")
+				contextfrontend  = {"email":user.email,"firstname":user.firstname,
 					"lastname":user.lastname,"phoneno":user.phoneno}
-		return Response(contextfrontend)
+				return JsonResponse(contextfrontend, status=200)
+		else:
+				print("Invalid User")
 
-	else:
-		return Response({"F"})
+		return JsonResponse({'F':'F'}, status=200)
+	return JsonResponse({'F':'F'}, status=200)
 
 class RegisterApi(APIView):
 	

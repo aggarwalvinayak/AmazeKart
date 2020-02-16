@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 
 from django.contrib import messages
-
+import json
 # from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser
 from django.contrib.auth import logout, authenticate, login
@@ -47,8 +47,10 @@ def register(request):
 def login_request(request):
     if request.method == "POST":
 
-        password = request.POST.get('password')
-        email = request.POST.get('email')
+        dataa = request.body.decode('utf-8')
+        dataaa=json.loads(dataa)
+        email=dataaa['email']
+        password = dataaa['password']
         print()
         print(email,password)
         user = authenticate(email=email, password=password)
