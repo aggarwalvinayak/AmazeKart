@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+import json
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
@@ -12,10 +12,11 @@ from .models import Product,Image
 import json
 from os import listdir
 from os.path import isfile, join
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate,login
 import os
 from users.models import CustomUser
 import time
+from django.views.decorators.csrf import csrf_exempt
 
 def firebaseup():
 	from google.cloud import storage
@@ -40,12 +41,13 @@ def firebaseup():
 
 def Form(request):
 	return render(request, "mainapp/image_form.html", {})
-
+@csrf_exempt
 def Upload(request):
 	productname = request.POST.get('name')
 	productcat = request.POST.get('cat')
 	productprice = request.POST.get('price')
 	productdesc = request.POST.get('desc')
+	print(productname)
 	if request.user.is_authenticated:
 		for count, x in enumerate(request.FILES.getlist("files")):
 			def process(f):
@@ -118,28 +120,51 @@ class ProductList(APIView):
 			product_saved = serializer.save()
 		return Response({"success": "Product '{}' created successfully".format(product_saved.productname)})
 
-
-
-class LoginApi(APIView):
-	
-	def get(self,request):
-		return Response("LoginAuth APIView")
-
+class NewProduct(APIView):
 	def post(self,request):
-		username = request.data.get('email')
-		password = request.data.get('password')
-
-		print(username,password)
-
-		user = authenticate(username=username, password=password)
-
-		if user is not None:
-			contextfrontend  = {"email":user.email,"firstname":user.firstname,
-						"lastname":user.lastname,"phoneno":user.phoneno}
-			return Response(contextfrontend)
-
+		
+		if request.user.is_authenticated:
+			productname = request.POST.get('name')
+			productcat = request.POST.get('cat')
+			productprice = request.POST.get('price')
+			productdesc = request.POST.get('desc')
+			image_urls=request.POST.get('image')
+			product=Product(productid=1,productname=productname,price=productprice,description=productdesc,user=request.user)
+			product.save()
+			for image in image_urls:
+				img=Image(imageid=1,imageurl=image,product=product)
+				img.save()
+			return Response("File(s) uploaded!")
 		else:
-			return Response({"F"})
+			return Response("Login karo")
+@csrf_exempt
+def LoginApi(request):
+	
+	# def get(self,request):
+	# 	return Response("LoginAuth APIView")
+
+	# def post(self,request):
+	# if 
+	print(request.POST)
+	dataa = request.body.decode('utf-8')
+	dataaa=json.loads(dataa)
+	username=dataaa['email']
+	password = dataaa['password']
+
+	print(username,password)
+
+	user = authenticate(username=username, password=password)
+	print("hekiasfd")
+
+	if user is not None:
+		login(user,request)
+		print("hekiasfd")
+		contextfrontend  = {"email":user.email,"firstname":user.firstname,
+					"lastname":user.lastname,"phoneno":user.phoneno}
+		return Response(contextfrontend)
+
+	else:
+		return Response({"F"})
 
 class RegisterApi(APIView):
 	
@@ -157,6 +182,9 @@ class RegisterApi(APIView):
 			user,created = CustomUser.objects.get_or_create(email = f_email,password = f_password,firstname = f_fname,lastname = f_lname,phoneno = f_phoneno)
 			user.set_password(f_password)
 			user.save()
+
+			user = authenticate(username=f_email, password=f_password)
+			login(user,request)
 			return Response({"Success"})
 
 		except Exception as e:
