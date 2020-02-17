@@ -208,15 +208,16 @@ class UpdateApi(APIView):
 		category = request.data.get('category')
 		description = request.data.get('description')
 		delete = request.data.get('delete')
-
+		print(email)
 		product_object = Product.objects.get(pk = productid)
 		
 		if product_object.user.email!=email:
-			product_list = Product.objects.all()
-			serializer = ProductSerializer(product_list,many = True)
+			uss = CustomUser.objects.get(email=email)
+			user_selling=Product.objects.filter(user=uss)
+			serializer = ProductSerializer(user_selling,many = True)
 			return Response(serializer.data)
 
-		if (delete and (delete == "true")):
+		if (delete == "true"):
 			product_object.delete()
 		else:
 			product_object.productname = productname
@@ -225,9 +226,9 @@ class UpdateApi(APIView):
 			product_object.description = description
 			product_object.save()
 
-		product_list = Product.objects.all()
-		serializer = ProductSerializer(product_list,many = True)
-
+		uss = CustomUser.objects.get(email=email)
+		user_selling=Product.objects.filter(user=uss)
+		serializer = ProductSerializer(user_selling,many = True)
 		return Response(serializer.data)
 
 
