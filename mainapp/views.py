@@ -119,7 +119,7 @@ class ProductList(APIView):
 		image_urls=request.POST.get('image')
 		email=request.POST.get('email')
 		print(image_urls)
-		product=Product(productid=1,productname=productname,category=productcat,price=productprice,description=productdesc,user=CustomUser.objects.get(email=email))
+		product=Product(productname=productname,category=productcat,price=productprice,description=productdesc,user=CustomUser.objects.get(email=email))
 		product.save()
 		image_urls=image_urls[1:-1].split(',')
 		if(image_urls):

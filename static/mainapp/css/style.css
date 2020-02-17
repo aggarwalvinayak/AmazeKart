@@ -767,8 +767,8 @@ textarea.input {
 .shop .shop-body {
   position: absolute;
   top: 0;
-  width: 75%;
-  padding: 30px;
+  width: 25%;
+  padding: 70px;
   z-index: 10;
 }
 
