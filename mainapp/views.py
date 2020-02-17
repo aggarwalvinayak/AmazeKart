@@ -213,7 +213,7 @@ class UpdateApi(APIView):
 		if product_object.user.email!=email:
 			return Response({"Failure"})
 
-		if delete == "true":
+		if (delete and (delete == "true")):
 			product_object.delete()
 		else:
 			product_object.productname = productname
