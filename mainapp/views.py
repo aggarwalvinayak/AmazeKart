@@ -210,8 +210,11 @@ class UpdateApi(APIView):
 		delete = request.data.get('delete')
 
 		product_object = Product.objects.get(pk = productid)
+		
 		if product_object.user.email!=email:
-			return Response({"Failure"})
+			product_list = Product.objects.all()
+			serializer = ProductSerializer(product_list,many = True)
+			return Response(serializer.data)
 
 		if (delete and (delete == "true")):
 			product_object.delete()
@@ -222,7 +225,10 @@ class UpdateApi(APIView):
 			product_object.description = description
 			product_object.save()
 
-		return Response({"Success"})
+		product_list = Product.objects.all()
+		serializer = ProductSerializer(product_list,many = True)
+
+		return Response(serializer.data)
 
 
 def store(request):
