@@ -19,7 +19,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
         fields = ('email','firstname','lastname','phoneno')
 
 class ImageSerializer(serializers.ModelSerializer):
-    imageid=serializers.IntegerField()
     imageurl=serializers.URLField()
 
     def create(self, validated_data):
@@ -34,7 +33,6 @@ class ProductSerializer(serializers.ModelSerializer):
 
     user = CustomUserSerializer(read_only = True)
 
-    productid = serializers.IntegerField()
     productname = serializers.CharField(max_length = 100)
     price = serializers.IntegerField()
     category = serializers.CharField(max_length = 100)
