@@ -78,16 +78,9 @@ class ProductList(APIView):
 		category = request.GET.get('cat')
 		sort = request.GET.get('sort')
 		email = request.GET.get('email')
-		user1 = request.GET.get('user')
-		if(user1):
-			if request.user.is_authenticated:
-				user_selling=Product.objects.filter(user=request.user)
-				serializer = ProductSerializer(user_selling,many = True)
-				return Response(serializer.data)
 
-			else:
-				return HttpResponse("Please Login to view this .")
 		if(email):
+			print(email)
 			uss = CustomUser.objects.get(email=email)
 			user_selling=Product.objects.filter(user=uss)
 			serializer = ProductSerializer(user_selling,many = True)
@@ -131,40 +124,33 @@ class ProductList(APIView):
 		image_urls=image_urls[1:-1].split(',')
 		if(image_urls):
 			for image in image_urls:
-				img=Image(imageid=1,imageurl=image.strip(),product=product)
+				img=Image(imageurl=image.strip(),product=product)
 				img.save()
 		else:
-			img=Image(imageid=1,imageurl="https://www.lbsnaa.gov.in/upload/academy_souvenir/images/59031ff5e92caNo-image-available.jpg",product=product)
+			img=Image(imageurl="https://www.lbsnaa.gov.in/upload/academy_souvenir/images/59031ff5e92caNo-image-available.jpg",product=product)
 			img.save()
 		return Response("File(s) uploaded!")
 
-@csrf_exempt
-def LoginApi(request):
+class LoginApi(APIView):
 	
-	if request.method == "POST":
+	def get(self,request):
+		return Response("LoginAuth APIView")
 
-		# dataa = request.body.decode('utf-8')
-		# dataaa=json.loads(dataa)
-		# email=dataaa['email']
-		# password = dataaa['password']
-		email=request.POST.get('email')
-		password=request.POST.get('password')
+	def post(self,request):
+		username = request.data.get('email')
+		password = request.data.get('password')
 
-		print()
-		print(email,password)
-		user = authenticate(email=email, password=password)
-		
-		if user is not None: 
-				login(request, user)
-				print("User Logged in")
-				contextfrontend  = {"email":user.email,"firstname":user.firstname,
-					"lastname":user.lastname,"phoneno":user.phoneno}
-				return JsonResponse(contextfrontend, status=200)
+		print(username,password)
+
+		user = authenticate(username=username, password=password)
+
+		if user is not None:
+			contextfrontend  = {"email":user.email,"firstname":user.firstname,
+						"lastname":user.lastname,"phoneno":user.phoneno}
+			return Response(contextfrontend)
+
 		else:
-				print("Invalid User")
-
-		return JsonResponse({'F':'F'}, status=200)
-	return JsonResponse({'F':'F'}, status=200)
+			return Response({"F"})
 
 class RegisterApi(APIView):
 	
