@@ -61,10 +61,10 @@ def Upload(request):
 				destination.close()
 			process(x)
 		image_urls=firebaseup()
-		product=Product(productid=1,productname=productname,price=productprice,description=productdesc,user=request.user)
+		product=Product(productname=productname,price=productprice,description=productdesc,user=request.user)
 		product.save()
 		for image in image_urls:
-			img=Image(imageid=1,imageurl=image,product=product)
+			img=Image(imageurl=image,product=product)
 			img.save()
 		return HttpResponse("File(s) uploaded!")
 	else:
@@ -184,13 +184,45 @@ class RegisterApi(APIView):
 			user.save()
 
 			user = authenticate(username=f_email, password=f_password)
-			login(user,request)
-			return Response({"Success"})
 
+			if user is not None:
+				login(user,request)
+				return Response({"Success"})
+			else:
+				return Response({"F"})
 		except Exception as e:
 			print(e)
 
 		return Response({"F"})
+
+class UpdateApi(APIView):
+	
+	def get(self,request):
+		return Response("Update/Delete APIView")
+
+	def post(self,request):
+		productid = request.data.get('id')
+		email = request.data.get('email')
+		productname = request.data.get('productname')
+		price = request.data.get('price')
+		category = request.data.get('category')
+		description = request.data.get('description')
+		delete = request.data.get('delete')
+
+		product_object = Product.objects.get(pk = productid)
+		if product_object.user.email!=email:
+			return Response({"Failure"})
+
+		if delete == "true":
+			product_object.delete()
+		else:
+			product_object.productname = productname
+			product_object.price = price
+			product_object.category = category
+			product_object.description = description
+			product_object.save()
+
+		return Response({"Success"})
 
 
 def store(request):

@@ -1,7 +1,7 @@
 from django.urls import path
 
 # from .views import  UserList,ProductList,ImageList
-from .views import ProductList,RegisterApi,Form,Upload
+from .views import ProductList,RegisterApi,Form,Upload,UpdateApi
 from . import views
 
 
@@ -13,6 +13,7 @@ urlpatterns = [
 	path('productdatabase/',  ProductList.as_view()),
 	path('loginapi/',  views.LoginApi),
 	path('registerapi/',RegisterApi.as_view()),
+    path('updateapi/',UpdateApi.as_view()),
 	path('store/',  views.store, name="store"),
 	path('form/', views.Form),
 	path('upload/', views.Upload),
