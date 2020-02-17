@@ -43,7 +43,7 @@ def firebaseup():
 
 def Form(request):
 	return render(request, "mainapp/image_form.html", {})
-	
+
 @csrf_exempt
 def Upload(request):
 	productname = request.POST.get('name')
@@ -81,7 +81,6 @@ class ProductList(APIView):
 		user1 = request.GET.get('user')
 		if(user1):
 			if request.user.is_authenticated:
-				print("YAASS")
 				user_selling=Product.objects.filter(user=request.user)
 				serializer = ProductSerializer(user_selling,many = True)
 				return Response(serializer.data)
@@ -126,11 +125,16 @@ class ProductList(APIView):
 		productdesc = request.POST.get('desc')
 		image_urls=request.POST.get('image')
 		email=request.POST.get('email')
-
-		product=Product(productid=1,productname=productname,price=productprice,description=productdesc,user=CustomUser.objects.get(email=email))
+		print(image_urls)
+		product=Product(productid=1,productname=productname,category=productcat,price=productprice,description=productdesc,user=CustomUser.objects.get(email=email))
 		product.save()
-		for image in image_urls:
-			img=Image(imageid=1,imageurl=image,product=product)
+		image_urls=image_urls[1:-1].split(',')
+		if(image_urls):
+			for image in image_urls:
+				img=Image(imageid=1,imageurl=image.strip(),product=product)
+				img.save()
+		else:
+			img=Image(imageid=1,imageurl="https://www.lbsnaa.gov.in/upload/academy_souvenir/images/59031ff5e92caNo-image-available.jpg",product=product)
 			img.save()
 		return Response("File(s) uploaded!")
 
