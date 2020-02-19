@@ -224,7 +224,7 @@ def store(request):
 	sort = request.GET.get('sort')
 	# print(search,category,sort)
 	param={'search':search,'cat':category,"sort":sort}
-	getdata = requests.get('http://127.0.0.1:8000/mainapp/productdatabase/',params=param)
+	getdata = requests.get('http://127.0.0.1:80/mainapp/productdatabase/',params=param)
 	data=getdata.json()
 	# print(11,getdata.json()[0]['productname'])
 	# data=json.loads(json)
