@@ -173,7 +173,7 @@ class RegisterApi(APIView):
 			user = authenticate(username=f_email, password=f_password)
 
 			if user is not None:
-				login(user,request)
+				# login(user,request)
 				return Response({"Success"})
 			else:
 				return Response({"F"})
