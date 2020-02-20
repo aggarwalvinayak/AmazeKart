@@ -87,26 +87,26 @@ class ProductList(APIView):
 			serializer = ProductSerializer(user_selling,many = True)
 			return Response(serializer.data)	
 
+		# cat_filter=Product.objects.order_by('-id')
+		cat_filter=Product.objects.all()
 		if(category and category!='All'):
-			cat_filter=Product.objects.filter(category=category).reverse()
-		else:
-			cat_filter=Product.objects.all().reverse()
+			cat_filter=cat_filter.filter(category=category)
 		if(search):
-			temp1=cat_filter.filter(productname__icontains=search)
-			temp2=cat_filter.filter(description__icontains=search)
-			search_filter=temp1
-			search_filter=search_filter.union(temp2)
 			for word in search.split():
-				temp1=cat_filter.filter(productname__icontains=word)
 				temp2=cat_filter.filter(description__icontains=word)
+				temp1=cat_filter.filter(productname__icontains=word)
+				search_filter=temp2
 				search_filter=search_filter.union(temp1)
-				search_filter=search_filter.union(temp2)
+			temp2=cat_filter.filter(description__icontains=search)
+			temp1=cat_filter.filter(productname__icontains=search)
+			search_filter=search_filter.union(temp2)
+			search_filter=search_filter.union(temp1)
 		else:
 			search_filter=cat_filter
 			
 
 		# print(search_filter)
-		product_list = search_filter
+		product_list = reversed(search_filter)
 		serializer = ProductSerializer(product_list,many = True)
 
 		return Response(serializer.data)
@@ -225,11 +225,13 @@ def store(request):
 	sort = request.GET.get('sort')
 	# print(search,category,sort)
 	param={'search':search,'cat':category,"sort":sort}
-	getdata = requests.get('http://127.0.0.1:80/mainapp/productdatabase/',params=param)
+	getdata = requests.get('http://127.0.0.1:8000/mainapp/productdatabase/',params=param)
+	# print(getdata)
+
 	data=getdata.json()
 	# print(11,getdata.json()[0]['productname'])
 	# data=json.loads(json)
-	print(getdata)
+	# print(getdata)
 	contextfrontend={'data':data}
 
 	return render(request = request,
