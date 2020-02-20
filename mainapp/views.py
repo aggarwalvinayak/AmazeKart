@@ -88,9 +88,9 @@ class ProductList(APIView):
 			return Response(serializer.data)	
 
 		if(category and category!='All'):
-			cat_filter=reversed(Product.objects.filter(category=category))
+			cat_filter=Product.objects.filter(category=category).reverse()
 		else:
-			cat_filter=reversed(Product.objects.all())
+			cat_filter=Product.objects.all().reverse()
 		if(search):
 			temp1=cat_filter.filter(productname__icontains=search)
 			temp2=cat_filter.filter(description__icontains=search)
