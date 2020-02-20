@@ -19,10 +19,11 @@ import time
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view, renderer_classes
 from django.http import JsonResponse
+from google.cloud import storage
+from datetime import timedelta
 
 def firebaseup():
-	from google.cloud import storage
-	from datetime import timedelta
+	
 
 	client=storage.Client()
 	bucket=client.get_bucket('amazekart-bits.appspot.com')
@@ -87,9 +88,9 @@ class ProductList(APIView):
 			return Response(serializer.data)	
 
 		if(category and category!='All'):
-			cat_filter=Product.objects.filter(category=category)
+			cat_filter=reversed(Product.objects.filter(category=category))
 		else:
-			cat_filter=Product.objects.all()
+			cat_filter=reversed(Product.objects.all())
 		if(search):
 			temp1=cat_filter.filter(productname__icontains=search)
 			temp2=cat_filter.filter(description__icontains=search)
