@@ -12,8 +12,7 @@ class Product(models.Model):
     )
 	description = models.TextField()
 
-	class Meta:
-		ordering=['-id']
+
 
 	def __str__(self):
 		return str(str(self.id) + " " + str(self.productname) )
