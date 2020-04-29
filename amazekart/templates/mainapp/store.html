@@ -445,70 +445,90 @@
 
 <div id="myModal{{product.id}}" class="modal">
 
-  <span class="close cursor" onclick="closeModal({{product.id}})">&times;</span>
-  <div class="modal-content" >
-    {% if product.images.0.imageurl %}
-
-    <div class="mySlides{{product.id}}" STYLE=" object-fit:contain;horizontal-align:middle; max-width: 200px;max-height: 150px; ">
-      <div class="numbertext">1 / 4</div>
-      <img src={{product.images.0.imageurl}} height=230px>
-    </div>
+  <!-- <span class="close cursor" onclick="closeModal({{product.id}})">&times;</span> -->
+  <div class="modal-content" >				
+		<span class="close">&times;</span>	 
+		<div class="container outside " >
+    {% if product.images.0.imageurl %}				
+		  <div class="mySlides{{product.id}}">
+		    <div class="numbertext">1 / 4</div>
+		      <img src={{product.images.0.imageurl}} class="sizer">
+		      <div class="abcd">
+		      	<p>fsl,lv dffffffv</p>
+		      	<p>Lorem ipsum dol </p>
+		      	
+		      </div>
+		  </div>
     {%endif %}
     {% if product.images.1.imageurl %}
-    <div class="mySlides{{product.id}}" STYLE="object-fit: contain;horizontal-align:middle; max-width: 200px;max-height: 150px; ">
-      <div class="numbertext">2 / 4</div>
-      <img src={{product.images.1.imageurl}} height=230px>
-    </div>
+    <div class="mySlides{{product.id}}">
+		    <div class="numbertext">2 / 4</div>
+		      <img src={{product.images.1.imageurl}} class="sizer">
+		      <div class="abcd">
+		      	<p>fsl,lv dffffffv</p>
+		      	<p>Lorem ipsum dol </p>
+		      	
+		      </div>
+		  </div>
     {% endif %}
     {% if product.images.2.imageurl %}
 
-    <div class="mySlides{{product.id}}" STYLE="object-fit: contain;horizontal-align:middle; max-width: 200px;max-height: 150px;">
-      <div class="numbertext">3 / 4</div>
-      <img src={{product.images.2.imageurl}} height=230px>
-    </div>
+    <div class="mySlides{{product.id}}">
+		    <div class="numbertext">3 / 4</div>
+		      <img src={{product.images.2.imageurl}} class="sizer">
+		      <div class="abcd">
+		      	<p>fsl,lv dffffffv</p>
+		      	<p>Lorem ipsum dol </p>
+		      	
+		      </div>
+		  </div>
     {% endif %}
     {% if product.images.3.imageurl %}
-    <div class="mySlides{{product.id}}" STYLE="object-fit: contain;horizontal-align:middle; max-width: 200px;max-height: 150px;"> 
-      <div class="numbertext">4 / 4</div>
-      <img src={{product.images.3.imageurl}} height=230px>
-    </div>
+    <div class="mySlides{{product.id}}">
+		    <div class="numbertext">4 / 4</div>
+		      <img src={{product.images.3.imageurl}} class="sizer">
+		      <div class="abcd">
+		      	<p>fsl,lv dffffffv</p>
+		      	<p>Lorem ipsum dol </p>
+		      </div>
+		  </div>
     {% endif %}
     <!-- Next/previous controls -->
     <a class="prev" onclick="plusSlides(-1,{{product.id}})">&#10094;</a>
     <a class="next" onclick="plusSlides(1,{{product.id}})">&#10095;</a>
 
-    <!-- Caption text --><br><br><br><br><br>
     <div class="caption-container">
-      <p id="caption" style="font-size:20px">{{product.productname}}<br>{{product.description}}<br>Rs. {{product.price}}<br><br><br>{{product.user.firstname}}  {{product.user.lastname}}<br>{{product.user.phoneno}}M</p>
-      <!-- <p id="caption" style="font-size:20px">{{product.productname}}</p> -->
-    </div>
-    <br><br>
-    <br><br>
-    <br><br>
-    <br><br>
+	    <p id="caption2"></p>
+	  </div>
+<div class="row col-lg-12 col-sm-12 col-xs-12 ">
 
     <!-- Thumbnail image controls -->
     {% if product.images.0.imageurl %}
-    <div class="column" STYLE="object-fit: contain; ">
-      <img class="demo" src={{product.images.0.imageurl}} onclick="currentSlide(1,{{product.id}})" height=130px alt="Phone">
+    <div class="column">
+      <img class="demo" src={{product.images.0.imageurl}} style="width:100%" onclick="currentSlide2(1)" alt="text 1
+      					text2">
     </div>
 {% endif %}
     {% if product.images.1.imageurl %}
-    <div class="column" STYLE="object-fit: contain;">
-      <img class="demo" src={{product.images.1.imageurl}} onclick="currentSlide(2,{{product.id}})"  height=130px alt="Snow">
+    <div class="column">
+      <img class="demo" src={{product.images.1.imageurl}} style="width:100%" onclick="currentSlide2(1)" alt="text 1
+      					text2">
     </div>
 {% endif %}
     {% if product.images.2.imageurl %}
-    <div class="column" STYLE="object-fit: contain;">
-      <img class="demo" src={{product.images.2.imageurl}} onclick="currentSlide(3,{{product.id}})"  height=130px alt="Mountains">
+    <div class="column">
+      <img class="demo" src={{product.images.2.imageurl}} style="width:100%" onclick="currentSlide2(1)" alt="text 1
+      					text2">
     </div>
 {% endif %}
     {% if product.images.3.imageurl %}
-    <div class="column" STYLE="object-fit: contain;">
-      <img class="demo" src={{product.images.3.imageurl}} onclick="currentSlide(4,{{product.id}})"  height=130px alt="Lights">
+    <div class="column">
+      <img class="demo" src={{product.images.3.imageurl}} style="width:100%" onclick="currentSlide2(1)" alt="text 1
+      					text2">
     </div>
           {% endif %}
-
+</div>
+</div>
   </div>
 </div>
 							<div class="col-md-4 col-xs-6" onclick="openModal({{product.id}});currentSlide(1,{{product.id}})">
