@@ -23,8 +23,6 @@ from google.cloud import storage
 from datetime import timedelta
 
 def firebaseup():
-	
-
 	client=storage.Client()
 	bucket=client.get_bucket('amazekart-bits.appspot.com')
 
@@ -32,7 +30,6 @@ def firebaseup():
 	onlyfiles = [f for f in listdir("./media/") if isfile(join("./media", f))]
 
 	for f in onlyfiles:
-		# print(f)
 		imageBlob = bucket.blob("/Product/")
 
 		imageBlob=bucket.blob("img"+str(int(round(time.time() * 1000))))
@@ -104,8 +101,6 @@ class ProductList(APIView):
 		else:
 			search_filter=cat_filter
 			
-
-		# print(search_filter)
 		product_list = reversed(search_filter)
 		serializer = ProductSerializer(product_list,many = True)
 
@@ -140,11 +135,9 @@ class LoginApi(APIView):
 	def post(self,request):
 		username = request.data.get('email')
 		password = request.data.get('password')
-
 		print(username,password)
 
 		user = authenticate(username=username, password=password)
-
 		if user is not None:
 			contextfrontend  = {"email":user.email,"firstname":user.firstname,
 						"lastname":user.lastname,"phoneno":user.phoneno}
@@ -223,15 +216,10 @@ def store(request):
 	search = request.GET.get('search')
 	category = request.GET.get('cat')
 	sort = request.GET.get('sort')
-	# print(search,category,sort)
 	param={'search':search,'cat':category,"sort":sort}
 	getdata = requests.get('http://127.0.0.1:8000/mainapp/productdatabase/',params=param)
-	# print(getdata)
 
 	data=getdata.json()
-	# print(11,getdata.json()[0]['productname'])
-	# data=json.loads(json)
-	# print(getdata)
 	contextfrontend={'data':data}
 
 	return render(request = request,
