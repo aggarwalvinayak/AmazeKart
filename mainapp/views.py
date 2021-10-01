@@ -29,14 +29,13 @@ def firebaseup():
 	url=[]
 	onlyfiles = [f for f in listdir("./media/") if isfile(join("./media", f))]
 
-	for f in onlyfiles:
+	for file in onlyfiles:
 		imageBlob = bucket.blob("/Product/")
 
 		imageBlob=bucket.blob("img"+str(int(round(time.time() * 1000))))
-		imageBlob.upload_from_filename("./media/"+str(f))
+		imageBlob.upload_from_filename("./media/"+str(file))
 		os.remove("./media/"+f)
 		url.append(imageBlob.generate_signed_url(expiration=timedelta(300)))
-	print(url)
 	return url
 
 def Form(request):
@@ -70,7 +69,6 @@ def Upload(request):
 
 
 class ProductList(APIView):
-
 	def get(self,request):
 		search = request.GET.get('search')
 		category = request.GET.get('cat')
@@ -84,7 +82,6 @@ class ProductList(APIView):
 			serializer = ProductSerializer(user_selling,many = True)
 			return Response(serializer.data)	
 
-		# cat_filter=Product.objects.order_by('-id')
 		cat_filter=Product.objects.all()
 		if(category and category!='All'):
 			cat_filter=cat_filter.filter(category=category)
@@ -106,8 +103,7 @@ class ProductList(APIView):
 
 		return Response(serializer.data)
 
-
-	def post(self,request):#only one entry per post request
+	def post(self,request):
 		productname = request.POST.get('name')
 		productcat = request.POST.get('cat')
 		productprice = request.POST.get('price')
@@ -128,7 +124,6 @@ class ProductList(APIView):
 		return Response("File(s) uploaded!")
 
 class LoginApi(APIView):
-	
 	def get(self,request):
 		return Response("LoginAuth APIView")
 
@@ -147,7 +142,6 @@ class LoginApi(APIView):
 			return Response({"F"})
 
 class RegisterApi(APIView):
-	
 	def get(self,request):
 		return Response("Register APIView")
 
@@ -166,7 +160,6 @@ class RegisterApi(APIView):
 			user = authenticate(username=f_email, password=f_password)
 
 			if user is not None:
-				# login(user,request)
 				return Response({"Success"})
 			else:
 				return Response({"F"})
